@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@theme {
+  /* New Palette from Illustration */
+  --color-primary: #0F5156; /* Deep Teal */
+  --color-primary-dark: #09383C; 
+  --color-secondary: #9D65C9; /* Lavender/Purple */
+  --color-accent-warm: #E94E34; /* Orange/Red */
+  --color-accent-yellow: #F4D35E; 
+  --color-accent-navy: #1F2937; /* Dark Gray/Navy for text */
+  --color-background: transparent; /* Transparent to show bg illustration */
+  --color-surface: rgba(255, 255, 255, 0.4); /* Glass Surface */
+  --color-glass-border: rgba(255, 255, 255, 0.6);
+
+  /* Animation Keyframes */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+:root {
+  font-family: 'Outfit', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  color: #0F5156;
+  background-color: var(--color-background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  @apply fixed inset-0 -z-10 w-full h-full bg-cover bg-center bg-no-repeat blur-[3px] scale-105;
+  /* Black layer (overlay) + Background Image */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./assets/bg-illustration.jpg');
+}
+
+/* Glassmorphism Utilities */
+@utility glass-panel {
+  @apply backdrop-blur-[20px] rounded-[20px] transition-all duration-300;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  border-left: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+@utility glass-panel-reset {
+  @apply rounded-none border-none border-r border-white/40;
+}
+
+@utility glass-card {
+  @apply backdrop-blur-[16px] border border-white/30 border-t-white/60 rounded-[20px] transition-all duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)];
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+  box-shadow: 
+    0 4px 16px 0 rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    @apply -translate-y-2 scale-102 border-white/80;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2));
+    box-shadow: 
+      0 20px 40px -5px rgba(0, 0, 0, 0.1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  }
+}
+
+@utility glass-input {
+  @apply bg-white/30 border border-white/30 backdrop-blur-[8px] outline-none;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.02),
+    0 1px 2px rgba(255, 255, 255, 0.6);
+
+  &:focus {
+    @apply bg-white/70 border-primary shadow-[0_0_0_4px_rgba(15,81,86,0.1),inset_0_1px_2px_rgba(0,0,0,0.01)];
+  }
+}
+
+/* Animations */
+@utility animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@utility animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@utility animate-scale-in {
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+@utility animate-slide-down {
+  animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@utility delay-100 { animation-delay: 100ms; }
+@utility delay-200 { animation-delay: 200ms; }
+@utility delay-300 { animation-delay: 300ms; }
+@utility delay-400 { animation-delay: 400ms; }
+@utility delay-500 { animation-delay: 500ms; }
+
+/* Interactive Hover Effects */
+@utility hover-scale {
+  @apply transition-transform duration-300 ease-out;
+
+  &:hover {
+    @apply -translate-y-1 scale-102 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)];
+  }
+}
+
+@utility hover-slide-right {
+  @apply transition-transform duration-200 ease-out;
+
+  &:hover {
+    @apply translate-x-1;
+  }
+}
+
+/* Toast Utilities */
+@utility glass-toast {
+  @apply bg-white/20 backdrop-blur-[16px] border border-white/40 rounded-full;
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+@utility glass-toast-success {
+  @apply border-emerald-500/30 text-emerald-900;
+}
+
+@utility glass-toast-error {
+  @apply border-red-500/30 text-red-900;
+}
+
+@utility glass-toast-info {
+  @apply border-blue-500/30 text-blue-900;
+}
